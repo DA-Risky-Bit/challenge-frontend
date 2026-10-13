@@ -1,22 +1,16 @@
-# Welcome to React Router!
+# Risky Bit Challenge Frontend
+> Diploma 2026/27
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Challenge frontend of the RiskyBit project, made as the practical part of the team's diploma.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
 
-## Features
+## Description
+The challenge interface for [RiskyBit](https://github.com/DA-Risky-Bit/RiskyBit), a software collection in Docker that provides an environment for hacking challenges for companies and schools. It lets participants <browse challenges, submit flags, view the scoreboard>. Built with React Router, TypeScript and TailwindCSS.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Installation
+This frontend is part of the RiskyBit compose setup. For a normal installation, use the [main repository](https://github.com/DA-Risky-Bit/RiskyBit) instead.
 
-## Getting Started
-
-### Installation
+### Local development
 
 Install the dependencies:
 
@@ -24,64 +18,36 @@ Install the dependencies:
 npm install
 ```
 
-### Development
-
-Start the development server with HMR:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+The app will be available at `http://localhost:5173`.
 
-## Building for Production
-
-Create a production build:
+### Production build
 
 ```bash
 npm run build
 ```
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
+### Docker
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+docker build -t riskybit-challenge-frontend .
+docker run -p 3000:3000 riskybit-challenge-frontend
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+## License
+This project is licensed under MIT, specifics in:
+[License](LICENSE)
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+## Contact
+**Main Contact:** [contact@riskybit.com](mailto:contact@riskybit.com)
 
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+Team:
+- **Valerian Hobel** – @htl3r-2135 [valerian.hobel@htl.rennweg.at](mailto:valerian.hobel@htl.rennweg.at)
+- **Christoph Neumayer** – @ItzVoxel [christoph.neumayer@htl.rennweg.at](mailto:christoph.neumayer@htl.rennweg.at)
+- **Gabriel Berger** – @htl3r-2129 [gabriel.berger@htl.rennweg.at](mailto:gabriel.berger@htl.rennweg.at)
+- **Alexander Reiter** – @Sunnickel [alexander.reiter@htl.rennweg.at](mailto:alexander.reiter@htl.rennweg.at)
