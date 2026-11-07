@@ -1,0 +1,149 @@
+{
+  "topics": [
+    {
+      "id": "phishing",
+      "title": "Phishing",
+      "tags": ["E-Mail", "Massenangriff", "Zugangsdaten"],
+      "description": "Gefälschte Nachrichten, die aussehen wie von einer bekannten Firma oder Behörde. Ziel ist es, Passwörter oder Zahlungsdaten zu stehlen oder Schadsoftware zu verbreiten.",
+      "attack": {
+        "text": "Die Angreifer verschicken dieselbe Nachricht an sehr viele Menschen. Sie erzeugen Zeitdruck oder Angst („Ihr Konto wird gesperrt“) und führen auf eine gefälschte Login-Seite, die dem Original täuschend ähnlich sieht. Wer dort seine Daten eingibt, gibt sie direkt an die Angreifer weiter.",
+        "example": "Von: sicherheit@paypa1-konto.example\nBetreff: Ihr Konto wird in 24 Stunden gesperrt\n\nSehr geehrter Kunde,\nwir haben ungewöhnliche Aktivitäten festgestellt.\nBestätigen Sie jetzt Ihre Daten:\nhttp://paypa1-konto.example/login"
+      },
+      "defense": [
+        "Absenderadresse und Link genau prüfen: Der Mauszeiger über dem Link zeigt das echte Ziel.",
+        "Nie über Links in Nachrichten einloggen, sondern die Seite selbst im Browser öffnen.",
+        "Misstrauisch werden bei Zeitdruck, Drohungen und unpersönlicher Anrede.",
+        "Zwei-Faktor-Authentifizierung aktivieren, damit ein gestohlenes Passwort allein nicht reicht.",
+        "Verdächtige Nachrichten melden und nicht darauf antworten."
+      ]
+    },
+    {
+      "id": "spear-phishing",
+      "title": "Spear-Phishing",
+      "tags": ["E-Mail", "Gezielt", "Recherche"],
+      "description": "Eine Phishing-Nachricht, die auf eine einzelne Person oder kleine Gruppe zugeschnitten ist. Sie wirkt dadurch deutlich glaubwürdiger als eine Massen-Mail.",
+      "attack": {
+        "text": "Vorher sammeln die Angreifer Informationen aus öffentlichen Quellen: Firmenwebsite, soziale Netzwerke, Stellenanzeigen. Die Nachricht nennt echte Namen, Projekte oder Kollegen und passt so genau in den Alltag des Opfers, dass sie kaum auffällt.",
+        "example": "Von: lisa.huber@firmen-intern.example\nBetreff: Folien für Donnerstag\n\nHallo Max,\nwie besprochen die überarbeiteten Folien für das Kundenmeeting am Donnerstag.\nDu findest sie hier: http://firmen-intern.example/folien\n\nLG Lisa"
+      },
+      "defense": [
+        "Auch bei bekannten Namen prüfen, ob die Adresse wirklich stimmt, denn Angreifer kopieren Namen und Signaturen.",
+        "Bei unerwarteten Anhängen oder Links kurz über einen zweiten Weg nachfragen, zum Beispiel per Telefon oder Chat.",
+        "Im Netz möglichst wenig über Arbeitgeber, Projekte und Kontakte öffentlich machen.",
+        "Ungewöhnliche Anfragen auch von Kollegen hinterfragen."
+      ]
+    },
+    {
+      "id": "vishing",
+      "title": "Vishing (Telefon)",
+      "tags": ["Telefon", "Autorität", "Zeitdruck"],
+      "description": "Phishing per Telefonanruf. Die Anrufer geben sich als Support, Bank oder Behörde aus und wollen Informationen oder Handlungen erreichen.",
+      "attack": {
+        "text": "Am Telefon fehlt die Zeit zum Nachdenken, und eine freundliche oder bestimmte Stimme wirkt vertrauenswürdig. Die Anrufer erzeugen Druck („sofort handeln“), nennen glaubwürdige Details und fordern zum Beispiel Zugangscodes, Passwörter oder die Installation einer Fernwartungs-Software.",
+        "example": "„Guten Tag, hier ist Herr Weber vom IT-Support. Wir haben bei Ihrem Rechner einen Virus festgestellt. Damit ich das beheben kann, nennen Sie mir bitte kurz Ihr Passwort und den Code, den Sie gleich per SMS bekommen.“"
+      },
+      "defense": [
+        "Niemals Passwörter oder Codes am Telefon nennen. Echte Support-Mitarbeiter fragen nicht danach.",
+        "Im Zweifel auflegen und die offizielle Nummer selbst anrufen, nicht die Nummer aus dem Anruf.",
+        "Keine Software auf Zuruf installieren und keinen Fernzugriff erlauben.",
+        "Sich nicht unter Druck setzen lassen: Seriöse Anliegen können warten."
+      ]
+    },
+    {
+      "id": "smishing",
+      "title": "Smishing (SMS)",
+      "tags": ["SMS", "Messenger", "Links"],
+      "description": "Phishing über SMS oder Messenger. Die Nachrichten sind kurz und enthalten meist einen Link, der auf eine gefälschte Seite führt.",
+      "attack": {
+        "text": "Beliebt sind angebliche Paketbenachrichtigungen, Bankwarnungen oder Nachrichten von „Verwandten mit neuer Nummer“. Auf dem Handy sind Links oft verkürzt und Absender schwerer zu prüfen, deshalb fällt die Fälschung seltener auf.",
+        "example": "Ihr Paket konnte nicht zugestellt werden. Bitte bestätigen Sie die Lieferadresse und zahlen Sie 1,99 € Gebühr:\nhttp://paket-zustellung.example/12345"
+      },
+      "defense": [
+        "Auf Links in unerwarteten SMS nicht tippen.",
+        "Bei Nachrichten von „Familie mit neuer Nummer“ zuerst unter der bekannten Nummer anrufen.",
+        "Pakete und Konten nur über die offizielle App oder Website prüfen.",
+        "Verdächtige Nachrichten löschen und die Nummer blockieren."
+      ]
+    },
+    {
+      "id": "pretexting",
+      "title": "Pretexting",
+      "tags": ["Rolle", "Vertrauen", "Informationen"],
+      "description": "Die Angreifer erfinden eine glaubwürdige Geschichte und eine Rolle, um an Informationen zu kommen, die ihnen nicht zustehen.",
+      "attack": {
+        "text": "Sie geben sich als Kollege, Techniker, Prüfer oder neuer Mitarbeiter aus und stellen harmlos wirkende Fragen. Einzelne Antworten wirken unwichtig, zusammen ergeben sie aber ein Bild, mit dem sich der nächste Schritt vorbereiten lässt.",
+        "example": "„Hallo, ich bin neu im Team von Frau Huber und habe noch keinen Zugang zum Projektlaufwerk. Könnten Sie mir kurz sagen, wie der Ordner heißt und wer ihn freigeben kann? Ich will nicht schon in der ersten Woche negativ auffallen.“"
+      },
+      "defense": [
+        "Identität bei ungewöhnlichen Anfragen über einen zweiten, bekannten Weg prüfen.",
+        "Nur Informationen weitergeben, die für die Person und ihre Aufgabe wirklich nötig sind.",
+        "Auch freundlich auftretende Personen dürfen nach Nachweis oder Rückfrage gefragt werden.",
+        "Seltsame Anfragen intern melden, damit andere gewarnt sind."
+      ]
+    },
+    {
+      "id": "baiting",
+      "title": "Baiting (Köder)",
+      "tags": ["USB-Stick", "Neugier", "Schadsoftware"],
+      "description": "Ein Köder weckt Neugier oder Gier, zum Beispiel ein „verlorener“ USB-Stick oder ein Gratis-Download. Wer ihn nutzt, startet dabei Schadsoftware.",
+      "attack": {
+        "text": "Die Angreifer legen präparierte Datenträger an Orten aus, an denen sie gefunden werden, oder bieten kostenlose Software, Filme oder Gutscheine an. Der Köder ist so gewählt, dass man ihn unbedingt ansehen will, etwa mit einer Beschriftung wie „Gehälter“.",
+        "example": "Ein USB-Stick liegt auf dem Parkplatz einer Firma.\nBeschriftung: „Gehälter 2026 – vertraulich“"
+      },
+      "defense": [
+        "Gefundene Datenträger niemals an den eigenen Rechner anschließen, sondern bei der IT oder dem Fundbüro abgeben.",
+        "Software nur aus offiziellen Quellen laden.",
+        "Automatisches Ausführen von Datenträgern deaktivieren.",
+        "Auf Angebote, die zu gut klingen, mit gesunder Skepsis reagieren."
+      ]
+    },
+    {
+      "id": "tailgating",
+      "title": "Tailgating",
+      "tags": ["Physisch", "Zutritt", "Hilfsbereitschaft"],
+      "description": "Eine unbefugte Person verschafft sich Zutritt zu einem gesicherten Bereich, indem sie sich einer berechtigten Person anschließt.",
+      "attack": {
+        "text": "Die Angreifer nutzen Höflichkeit aus. Sie warten an der Tür, tragen zum Beispiel Kartons oder einen Kaffeebecher und bitten darum, dass jemand die Tür aufhält. Wer will schon unhöflich sein? Drinnen können sie Geräte anschließen, Unterlagen ansehen oder weitere Informationen sammeln.",
+        "example": "Eine Person mit beiden Händen voller Kartons steht vor der Zugangstür:\n„Oh, meine Karte liegt noch im Auto. Würden Sie mir kurz aufhalten?“"
+      },
+      "defense": [
+        "Türen nur für Personen öffnen, die man kennt, und jeden selbst mit der eigenen Karte durchgehen lassen.",
+        "Fremde freundlich zum Empfang begleiten, statt sie allein weitergehen zu lassen.",
+        "Besucherausweise tragen und prüfen.",
+        "Unbekannte Personen in gesicherten Bereichen höflich ansprechen oder melden."
+      ]
+    },
+    {
+      "id": "ceo-fraud",
+      "title": "CEO-Betrug",
+      "tags": ["E-Mail", "Autorität", "Zahlung"],
+      "description": "Angreifer geben sich als Chef oder Geschäftsführung aus und verlangen eine dringende, vertrauliche Überweisung oder Information.",
+      "attack": {
+        "text": "Die Nachricht wirkt wie vom Vorgesetzten, oft von einer ähnlichen Adresse oder einem gefälschten Konto. Sie betont Eile und Vertraulichkeit („sprich mit niemandem darüber“), damit das Opfer nicht nachfragt und die Zahlung ohne Prüfung auslöst.",
+        "example": "Von: g.mueller@firma-gruppe.example\nBetreff: Dringend und vertraulich\n\nHallo Anna,\nich sitze gerade im Termin und kann nicht telefonieren. Bitte überweise heute noch 18.500 € an das unten genannte Konto. Es geht um eine Übernahme, bitte sprich mit niemandem darüber.\n\nGruß\nG. Müller"
+      },
+      "defense": [
+        "Bei Zahlungsaufforderungen immer über einen zweiten Weg zurückfragen, zum Beispiel per Telefon unter bekannter Nummer.",
+        "Zahlungen nach dem Vier-Augen-Prinzip freigeben.",
+        "Misstrauisch werden bei Geheimhaltung, Eile und neuen Kontonummern.",
+        "Mitarbeitende dürfen und sollen Anweisungen hinterfragen, auch von Vorgesetzten."
+      ]
+    },
+    {
+      "id": "quid-pro-quo",
+      "title": "Quid pro quo",
+      "tags": ["Gegenleistung", "Support", "Vertrauen"],
+      "description": "Die Angreifer bieten scheinbar etwas Nützliches an und verlangen dafür eine Gegenleistung, zum Beispiel Zugang oder Informationen.",
+      "attack": {
+        "text": "Typisch ist falscher technischer Support: Jemand ruft viele Personen an und bietet Hilfe bei einem Problem an. Wer wirklich gerade ein Problem hat, ist dankbar und folgt den Anweisungen, zum Beispiel ein Programm zu installieren oder Zugangsdaten zu nennen.",
+        "example": "„Wir bieten diese Woche einen kostenlosen Sicherheitscheck für Ihren Rechner an. Dafür brauche ich nur kurz Ihren Benutzernamen und ein Passwort, dann lasse ich das Programm drüberlaufen.“"
+      },
+      "defense": [
+        "Hilfe nur von Stellen annehmen, die man selbst kontaktiert hat.",
+        "Echte Dienstleister fragen nie nach dem Passwort.",
+        "Kostenlose Angebote mit Gegenleistung kritisch prüfen.",
+        "Im Zweifel bei der offiziellen IT-Abteilung nachfragen."
+      ]
+    }
+  ]
+}

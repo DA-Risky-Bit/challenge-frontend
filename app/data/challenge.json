@@ -1,0 +1,48 @@
+{
+  "stages": [
+    {
+      "stage": 1,
+      "title": "Recherche",
+      "terminal": false,
+      "story": [
+        [{ "text": "", "href": "chatty.org" }]
+      ],
+      "goal": "",
+      "submit": {
+        "fields": [
+          { "name": "username", "label": "Benutzername", "type": "text" },
+          { "name": "password", "label": "Passwort", "type": "password" }
+        ]
+      }
+    },
+    {
+      "stage": 2,
+      "title": "Terminal",
+      "terminal": true,
+      "story": [
+        [{ "text": "", "href": "" }]
+      ],
+      "goal": "",
+      "submit": {
+        "fields": [
+          { "name": "username", "label": "Benutzername", "type": "text" },
+          { "name": "password", "label": "Passwort", "type": "password" }
+        ]
+      }
+    },
+    {
+      "stage": 3,
+      "title": "Terminal",
+      "terminal": true,
+      "story": [
+        [{ "text": "", "href": "" }]
+      ],
+      "goal": "",
+      "submit": {
+        "fields": [
+          { "name": "path", "label": "Pfad", "type": "text", "placeholder": "/pfad/zur/datei", "mono": true }
+        ]
+      }
+    }
+  ]
+}
