@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Route } from "./+types/challenge";
 import { useApp } from "~/context/AppContext";
+import { WS_URL } from "~/config";
 import SidePanel from "~/components/SidePanel";
 import Terminal from "~/components/Terminal";
 import RichParagraph from "~/components/RichParagraph";
@@ -11,7 +12,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Challenge() {
-  const { challenge, stage, lobbyId, username, terminalLines } = useApp();
+  const { challenge, stage, lobbyId } = useApp();
 
   const current = challenge.stages.find((s) => s.stage === stage);
   const hasTerminal = current?.terminal !== false;
@@ -27,71 +28,69 @@ export default function Challenge() {
     if (window.innerWidth < 1000) setRightOpen(false);
   }, []);
 
-  const prompt = username && lobbyId ? `${username}@${lobbyId}:~$` : "$";
-
   return (
-    <section className="view">
-      <div className="wrap wide">
-        <div className="page-h">
-          {lobbyId && <p className="eyebrow">Lobby {lobbyId}</p>}
-          <h1>{current?.title}</h1>
+      <section className="view">
+        <div className="wrap wide">
+          <div className="page-h">
+            {lobbyId && <p className="eyebrow">Lobby {lobbyId}</p>}
+            <h1>{current?.title}</h1>
+          </div>
+
+          <div className="stage" data-l={storyOpen ? "open" : "closed"} data-r={rightOpen ? "open" : "closed"} data-terminal={hasTerminal}>
+            <SidePanel
+                side="l"
+                id="sideLBody"
+                label="Story"
+                kicker="Hintergrund"
+                title="Die Story"
+                open={storyOpen}
+                locked={!hasTerminal}
+                onToggle={() => setLeftOpen(!leftOpen)}
+            >
+              <div className="story">
+                {(current?.story ?? []).map((p, i) => <RichParagraph key={i} content={p} />)}
+              </div>
+            </SidePanel>
+
+            {hasTerminal && <Terminal url={WS_URL} />}
+
+            <SidePanel
+                side="r"
+                id="sideRBody"
+                label="Abgabe"
+                kicker="Abgabe"
+                title={`Phase ${stage} von 3`}
+                dots={<Dots count={stage} />}
+                open={rightOpen}
+                onToggle={() => setRightOpen(!rightOpen)}
+            >
+              <div className="obj">
+                <h3>Ziel</h3>
+                <p>{current?.goal}</p>
+              </div>
+              <form className="form" key={stage} autoComplete="off" onSubmit={(e) => e.preventDefault()}>
+                <fieldset className="fs">
+                  {fields.map((f) => (
+                      <div className="field" key={f.name}>
+                        <label htmlFor={`sub-${f.name}`}>{f.label}</label>
+                        <input
+                            id={`sub-${f.name}`}
+                            name={f.name}
+                            type={f.type}
+                            className={f.mono ? "path" : undefined}
+                            placeholder={f.placeholder}
+                            autoCapitalize="off"
+                            spellCheck={false}
+                            required
+                        />
+                      </div>
+                  ))}
+                </fieldset>
+                <button className="btn" type="submit">Abgeben</button>
+              </form>
+            </SidePanel>
+          </div>
         </div>
-
-        <div className="stage" data-l={storyOpen ? "open" : "closed"} data-r={rightOpen ? "open" : "closed"} data-terminal={hasTerminal}>
-          <SidePanel
-            side="l"
-            id="sideLBody"
-            label="Story"
-            kicker="Hintergrund"
-            title="Die Story"
-            open={storyOpen}
-            locked={!hasTerminal}
-            onToggle={() => setLeftOpen(!leftOpen)}
-          >
-            <div className="story">
-              {(current?.story ?? []).map((p, i) => <RichParagraph key={i} content={p} />)}
-            </div>
-          </SidePanel>
-
-          {hasTerminal && <Terminal lines={terminalLines} prompt={prompt} />}
-
-          <SidePanel
-            side="r"
-            id="sideRBody"
-            label="Abgabe"
-            kicker="Abgabe"
-            title={`Phase ${stage} von 3`}
-            dots={<Dots count={stage} />}
-            open={rightOpen}
-            onToggle={() => setRightOpen(!rightOpen)}
-          >
-            <div className="obj">
-              <h3>Ziel</h3>
-              <p>{current?.goal}</p>
-            </div>
-            <form className="form" key={stage} autoComplete="off" onSubmit={(e) => e.preventDefault()}>
-              <fieldset className="fs">
-                {fields.map((f) => (
-                  <div className="field" key={f.name}>
-                    <label htmlFor={`sub-${f.name}`}>{f.label}</label>
-                    <input
-                      id={`sub-${f.name}`}
-                      name={f.name}
-                      type={f.type}
-                      className={f.mono ? "path" : undefined}
-                      placeholder={f.placeholder}
-                      autoCapitalize="off"
-                      spellCheck={false}
-                      required
-                    />
-                  </div>
-                ))}
-              </fieldset>
-              <button className="btn" type="submit">Abgeben</button>
-            </form>
-          </SidePanel>
-        </div>
-      </div>
-    </section>
+      </section>
   );
 }
