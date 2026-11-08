@@ -24,6 +24,7 @@
   --gutter:clamp(16px,4vw,40px);
 }
 
+<<<<<<< HEAD
 /* Light mode shenanigans */
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
@@ -40,6 +41,18 @@
     --soft:10%;
     --surface-a:86%;
     --shape-fill:.09;
+=======
+@keyframes fade {
+  from { opacity: 0; }
+}
+
+html,
+body {
+  @apply bg-white dark:bg-gray-950;
+
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+>>>>>>> 60e5c1f6758b49a236f2b1d34cb84209333c403f
   }
 }
 :root[data-theme="light"]{

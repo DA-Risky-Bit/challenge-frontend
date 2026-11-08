@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import { AppProvider } from "~/context/AppContext";
 import "./app.css";
+import CookieBanner from "./components/CookieBanner";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -52,9 +53,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
+<<<<<<< HEAD
       <AppProvider>
         <Outlet />
       </AppProvider>
+=======
+    <>
+      <CookieBanner privacyUrl="/privacy" />
+      <Outlet />
+    </>
+>>>>>>> 60e5c1f6758b49a236f2b1d34cb84209333c403f
   );
 }
 
