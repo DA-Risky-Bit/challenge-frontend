@@ -80,29 +80,28 @@ export default function Login() {
         <div className="wrap">
           <div className="info-h">
             <p className="eyebrow">Mehr zur Challenge</p>
-            <h2>[Überschrift einfügen]</h2>
+            <h2>Über Risky Bit</h2>
           </div>
           <div className="info-grid">
             <article className="info-b">
-              <h3>Inidividuelle Challenges</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <h3>Keine Constraints</h3>
+              <p>Risky Bit gibt keine Vorgaben, wie die Challenge gelöst werden soll. Dadurch kann man als User verschiedenste Lösungsansätze ausprobieren und sein Hacking-Geschick unter Beweis stellen.</p>
             </article>
             <article className="info-b">
-              <h3>[Titel 2]</h3>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <h3>Lernressourcen</h3>
+              <p>Mit den eigens erstellten Risky Bit Lernressourcen kann man schnell und einfach relevante Ansätze erhalten. Durch die sorgfältige Auswahl der Themengebiete wird auch sichergestellt, dass nicht jeder Ansatz zum Ziel führt - es liegt am Skill des Users, die richtigen Ansätze zu seinem Vorteil zu nutzen.</p>
             </article>
             <article className="info-b">
-              <h3>[Titel 3]</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              <h3>Flexibilität</h3>
+              <p>Durch die geschickten Backend-Lösungen kann Risky Bit sicherstellen, dass auch bei hoher Last die UX auf höchstem Niveau bleibt. Von automatischem Erstellen neuer Container bei hoher Last bis hin zu geregelten Container-Ressourcen kann Risky Bit sicherstellen, dass auch eine hohe Anzahl an Nutzern kein Problem darstellt.</p>
             </article>
           </div>
           <div className="panel info-wide">
             <div>
-              <h3>[Titel 4]</h3>
-              <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
-              <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
+              <h3>Leaderboard</h3>
+              <p>Keine Challenge würde sonderlich viel Spaß bereiten, wenn sie nicht als Wettkampf ausgetragen wird. Daher bietet Risky Bit für jede Lobby ein eigenes, privates Leaderboard, mit dem sich alle Teilnehmer untereinander messen können.</p>
+              <p>Dabei wird das eigens für Risky Bit entwickelte Punktesystem verwendet, das sowohl Fairness als auch Spielspaß für alle Nutzer gewährleistet.</p>
             </div>
-            <div className="ph-box" aria-hidden="true"><span>Bild oder Grafik</span></div>
           </div>
         </div>
       </div>
