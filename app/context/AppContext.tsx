@@ -9,7 +9,9 @@ import {
 } from "react";
 import challengeData from "~/data/challenge.json";
 import resourcesData from "~/data/resources.json";
+import { hasAcknowledged } from "~/utils/cookies";
 import type {
+    Answers,
     Challenge,
     LeaderboardEntry,
     Resources,
@@ -19,7 +21,7 @@ import type {
 type AppState = {
     isLoggedIn: boolean;
     authChecked: boolean;
-    login: () => void;
+    login: () => boolean;
     logout: () => void;
 
     lobbyId: string;
@@ -31,6 +33,8 @@ type AppState = {
 
     stage: Stage;
     setStage: Dispatch<SetStateAction<Stage>>;
+    answers: Answers;
+    setAnswers: Dispatch<SetStateAction<Answers>>;
 
     leaderboard: LeaderboardEntry[];
     setLeaderboard: Dispatch<SetStateAction<LeaderboardEntry[]>>;
@@ -62,12 +66,12 @@ function writeAuth(on: boolean) {
     }
 }
 
-export function AppProvider({children}: { children: ReactNode }) {
+export function AppProvider({ children }: { children: ReactNode }) {
     // storage is read after mount so server and client render the same first pass
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [authChecked, setAuthChecked] = useState(false);
     useEffect(() => {
-        setLoggedIn(readAuth());
+        setLoggedIn(readAuth() && hasAcknowledged());
         setAuthChecked(true);
     }, []);
 
@@ -75,8 +79,10 @@ export function AppProvider({children}: { children: ReactNode }) {
     const [username, setUsername] = useState("");
     const [points, setPoints] = useState<number | null>(null);
 
-    // Generelle Info: Kann derzeit geändert werden, um verschiedene Stages anzuzeigen (sonst nicht änderbar, solange backend für submission nicht steht)
-    const [stage, setStage] = useState<Stage>(2);
+    // furthest stage reached: 1, 2 or 3; earlier stages can be reviewed, later ones stay locked
+    const [stage, setStage] = useState<Stage>(3);
+    // submitted inputs of finished stages: { 1: { username: "…" } }
+    const [answers, setAnswers] = useState<Answers>({});
 
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
@@ -84,9 +90,12 @@ export function AppProvider({children}: { children: ReactNode }) {
     const [challenge, setChallenge] = useState<Challenge>(challengeData);
     const [resources, setResources] = useState<Resources>(resourcesData);
 
+    // signing in needs the cookie notice to be acknowledged
     const login = () => {
+        if (!hasAcknowledged()) return false;
         writeAuth(true);
         setLoggedIn(true);
+        return true;
     };
     const logout = () => {
         writeAuth(false);
@@ -106,6 +115,8 @@ export function AppProvider({children}: { children: ReactNode }) {
         setPoints,
         stage,
         setStage,
+        answers,
+        setAnswers,
         leaderboard,
         setLeaderboard,
         challenge,

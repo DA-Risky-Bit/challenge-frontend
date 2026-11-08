@@ -22,6 +22,9 @@ export type StageContent = {
 
 export type Challenge = { stages: StageContent[] };
 
+// stage number -> field name -> submitted value
+export type Answers = Record<number, Record<string, string>>;
+
 export type Topic = {
     id: string;
     title: string;

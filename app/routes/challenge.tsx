@@ -12,11 +12,20 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Challenge() {
-  const { challenge, stage, lobbyId } = useApp();
+  const { challenge, stage, lobbyId, answers } = useApp();
 
-  const current = challenge.stages.find((s) => s.stage === stage);
-  const hasTerminal = current?.terminal !== false;
+  // `stage` is the furthest stage reached; `shown` is the one on screen (never beyond `stage`)
+  const [view, setView] = useState<number>(stage);
+  useEffect(() => setView(stage), [stage]);
+  const shown = Math.min(view, stage);
+  const reviewing = shown < stage;
+
+  const current = challenge.stages.find((s) => s.stage === shown);
   const fields = current?.submit.fields ?? [];
+
+  // the terminal belongs to the current stage; it stays connected (just hidden) while an earlier stage is reviewed
+  const liveHasTerminal = challenge.stages.find((s) => s.stage === stage)?.terminal !== false;
+  const hasTerminal = liveHasTerminal && !reviewing;
 
   const [leftOpen, setLeftOpen] = useState(true);
   const [rightOpen, setRightOpen] = useState(true);
@@ -31,9 +40,25 @@ export default function Challenge() {
   return (
       <section className="view">
         <div className="wrap wide">
-          <div className="page-h">
-            {lobbyId && <p className="eyebrow">Lobby {lobbyId}</p>}
-            <h1>{current?.title}</h1>
+          <div className="page-h has-tools">
+            <div className="page-h-t">
+              {lobbyId && <p className="eyebrow">Lobby {lobbyId}</p>}
+              <h1>{current?.title}</h1>
+            </div>
+            <div className="seg sm" role="group" aria-label="Phase wählen">
+              {challenge.stages.map((s) => (
+                  <button
+                      key={s.stage}
+                      type="button"
+                      aria-pressed={s.stage === shown}
+                      disabled={s.stage > stage}
+                      title={s.stage > stage ? "Noch nicht freigeschaltet" : undefined}
+                      onClick={() => setView(s.stage)}
+                  >
+                    Phase {s.stage}
+                  </button>
+              ))}
+            </div>
           </div>
 
           <div className="stage" data-l={storyOpen ? "open" : "closed"} data-r={rightOpen ? "open" : "closed"} data-terminal={hasTerminal}>
@@ -52,15 +77,15 @@ export default function Challenge() {
               </div>
             </SidePanel>
 
-            {hasTerminal && <Terminal url={WS_URL} />}
+            {liveHasTerminal && <Terminal url={WS_URL} />}
 
             <SidePanel
                 side="r"
                 id="sideRBody"
                 label="Abgabe"
                 kicker="Abgabe"
-                title={`Phase ${stage} von 3`}
-                dots={<Dots count={stage} />}
+                title={`Phase ${shown} von 3`}
+                dots={<Dots count={shown} />}
                 open={rightOpen}
                 onToggle={() => setRightOpen(!rightOpen)}
             >
@@ -68,7 +93,7 @@ export default function Challenge() {
                 <h3>Ziel</h3>
                 <p>{current?.goal}</p>
               </div>
-              <form className="form" key={stage} autoComplete="off" onSubmit={(e) => e.preventDefault()}>
+              <form className="form" key={shown} autoComplete="off" onSubmit={(e) => e.preventDefault()}>
                 <fieldset className="fs">
                   {fields.map((f) => (
                       <div className="field" key={f.name}>
@@ -78,7 +103,9 @@ export default function Challenge() {
                             name={f.name}
                             type={f.type}
                             className={f.mono ? "path" : undefined}
-                            placeholder={f.placeholder}
+                            placeholder={reviewing ? undefined : f.placeholder}
+                            defaultValue={reviewing ? answers[shown]?.[f.name] ?? "" : undefined}
+                            readOnly={reviewing}
                             autoCapitalize="off"
                             spellCheck={false}
                             required
@@ -86,7 +113,11 @@ export default function Challenge() {
                       </div>
                   ))}
                 </fieldset>
-                <button className="btn" type="submit">Abgeben</button>
+                {reviewing ? (
+                    <p className="hint">Diese Phase ist abgeschlossen. Du siehst deine Abgabe, kannst sie aber nicht mehr ändern.</p>
+                ) : (
+                    <button className="btn" type="submit">Abgeben</button>
+                )}
               </form>
             </SidePanel>
           </div>
