@@ -144,6 +144,237 @@
         "Kostenlose Angebote mit Gegenleistung kritisch prüfen.",
         "Im Zweifel bei der offiziellen IT-Abteilung nachfragen."
       ]
+    },
+    {
+      "id": "osi-modell",
+      "title": "OSI-Modell",
+      "tags": [
+        "Grundlagen",
+        "Schichten",
+        "Modell"
+      ],
+      "description": "Das OSI-Modell teilt die Kommunikation im Netzwerk in sieben Schichten ein. Jede Schicht hat eine feste Aufgabe und nutzt die Dienste der Schicht darunter. So lässt sich genau beschreiben, wo etwas im Netzwerk passiert, und wo es angegriffen werden kann. In der Praxis wird oft das einfachere TCP/IP-Modell mit vier Schichten verwendet.",
+      "attack": {
+        "text": "Angriffe setzen auf einer bestimmten Schicht an. Je weiter unten, desto näher an der Hardware, je weiter oben, desto näher an Anwendung und Mensch. Wer einen Angriff einer Schicht zuordnen kann, weiß auch, welche Schutzmaßnahme passt.",
+        "example": "Schicht       Aufgabe                     Typischer Angriff\n7 Anwendung   HTTP, DNS, E-Mail           SQL-Injection, Phishing\n6 Darstellung Formate, Verschlüsselung    SSL-Stripping\n5 Sitzung     Verbindungen verwalten      Session-Hijacking\n4 Transport   TCP, UDP, Ports             SYN-Flood, Port-Scan\n3 Vermittlung IP, Routing                 IP-Spoofing\n2 Sicherung   MAC, Switch                 ARP-Spoofing\n1 Bitübertr.  Kabel, Funk                 Abhören, Störsender"
+      },
+      "defense": [
+        "Auf mehreren Schichten gleichzeitig schützen („Defense in Depth“), denn keine einzelne Maßnahme deckt alles ab.",
+        "Schicht 1: Zugang zu Netzwerkdosen, Kabeln und Serverräumen physisch absichern.",
+        "Schicht 2 und 3: Netzwerke trennen und Sicherheitsfunktionen der Switches und Router nutzen.",
+        "Schicht 4: Firewalls lassen nur die Verbindungen zu, die gebraucht werden.",
+        "Schicht 5 bis 7: Software aktuell halten, Eingaben prüfen, Verbindungen verschlüsseln und Menschen schulen."
+      ]
+    },
+    {
+      "id": "ip-adressen",
+      "title": "IP-Adressen",
+      "tags": [
+        "Schicht 3",
+        "Adressierung",
+        "IPv4/IPv6"
+      ],
+      "description": "Eine IP-Adresse identifiziert ein Gerät in einem Netzwerk, ähnlich wie eine Postadresse. IPv4-Adressen bestehen aus vier Zahlen von 0 bis 255 (zum Beispiel 192.168.1.10). Weil sie knapp werden, gibt es IPv6 mit viel längeren Adressen. Private Adressbereiche (10.x.x.x, 172.16.x.x bis 172.31.x.x, 192.168.x.x) sind nur im eigenen Netz gültig, öffentliche Adressen sind aus dem Internet erreichbar. 127.0.0.1 bezeichnet immer das eigene Gerät.",
+      "attack": {
+        "text": "Beim IP-Spoofing fälschen Angreifer die Absenderadresse eines Pakets. Damit verstecken sie sich oder geben sich als ein anderes Gerät aus. Die Antwort geht an die gefälschte Adresse, deshalb wird die Methode vor allem für Angriffe genutzt, bei denen keine Antwort nötig ist, etwa Überlastungsangriffe (DDoS). Außerdem durchsuchen Angreifer ganze öffentliche Adressbereiche automatisch nach erreichbaren Geräten.",
+        "example": "Normales Paket:\n  Absender 192.168.1.10  →  Ziel 203.0.113.5\n\nGefälschtes Paket:\n  Absender 198.51.100.7 (gefälscht)  →  Ziel 203.0.113.5\n  Die Antwort geht an 198.51.100.7, nicht an den Angreifer."
+      },
+      "defense": [
+        "Router und Firewalls filtern Pakete, deren Absenderadresse nicht zum Netz passt, aus dem sie kommen (Anti-Spoofing).",
+        "Geräte und Dienste, die nicht aus dem Internet erreichbar sein müssen, bekommen nur private Adressen.",
+        "Nicht gebrauchte Dienste abschalten, denn alles Erreichbare kann gescannt und angegriffen werden.",
+        "Sich nie allein auf die IP-Adresse als Beweis für die Identität verlassen, sondern zusätzlich anmelden und verschlüsseln.",
+        "Protokolle auswerten, um auffällige Zugriffe zu erkennen."
+      ]
+    },
+    {
+      "id": "subnetze",
+      "title": "Subnetze und Subnetzmaske",
+      "tags": [
+        "Schicht 3",
+        "CIDR",
+        "Segmentierung"
+      ],
+      "description": "Ein Netzwerk wird in Subnetze unterteilt. Die Subnetzmaske (zum Beispiel 255.255.255.0 oder kurz /24) legt fest, welcher Teil der IP-Adresse das Netz bezeichnet und welcher das Gerät. Geräte im selben Subnetz sprechen direkt miteinander, für alles andere schicken sie die Pakete an das Gateway, meist den Router.",
+      "attack": {
+        "text": "In einem einzigen großen Netz kann jedes Gerät jedes andere erreichen. Hat ein Angreifer nur ein schwach gesichertes Gerät übernommen, etwa eine Kamera oder einen Drucker, kann er von dort aus das ganze Netz erkunden und sich weiter vorarbeiten („Lateral Movement“).",
+        "example": "Netz 192.168.1.0/24\n  Maske:       255.255.255.0\n  Adressen:    192.168.1.0 bis 192.168.1.255\n  Geräte:      192.168.1.1 bis 192.168.1.254 (254 Stück)\n  Broadcast:   192.168.1.255\n\n/16 = 65.534 Geräte, /30 = 2 Geräte"
+      },
+      "defense": [
+        "Das Netz in Segmente teilen, zum Beispiel für Server, Mitarbeitende, Gäste und IoT-Geräte (VLANs).",
+        "Zwischen den Segmenten eine Firewall mit klaren Regeln einsetzen.",
+        "Jedes Segment darf nur das erreichen, was es wirklich braucht („Least Privilege“).",
+        "Gäste-WLAN und unsichere Geräte strikt vom restlichen Netz trennen.",
+        "Auffälligen Datenverkehr zwischen Segmenten überwachen."
+      ]
+    },
+    {
+      "id": "mac-adressen",
+      "title": "MAC-Adressen",
+      "tags": [
+        "Schicht 2",
+        "Hardware",
+        "Switch"
+      ],
+      "description": "Jede Netzwerkkarte hat eine MAC-Adresse aus sechs Bytes, zum Beispiel 00:1A:2B:3C:4D:5E. Die ersten drei Bytes bezeichnen den Hersteller. MAC-Adressen gelten nur im lokalen Netz: Ein Switch lernt, hinter welchem Anschluss welche MAC-Adresse hängt, und leitet Daten gezielt dorthin. Über Router hinweg wird sie bei jedem Schritt neu gesetzt.",
+      "attack": {
+        "text": "Eine MAC-Adresse lässt sich per Software ändern (MAC-Spoofing). Angreifer übernehmen so die Adresse eines erlaubten Geräts und umgehen einfache Zugangsfilter. Beim MAC-Flooding überschwemmen sie den Switch mit gefälschten Adressen, bis seine Tabelle voll ist. Er sendet dann Daten an alle Anschlüsse, und der Angreifer kann mitlesen.",
+        "example": "WLAN lässt nur bekannte Geräte zu:\n  Gerät von Anna:  00:1A:2B:3C:4D:5E  → erlaubt\n\nAngreifer liest die Adresse mit und übernimmt sie:\n  Gerät des Angreifers: 00:1A:2B:3C:4D:5E  → wird ebenfalls durchgelassen"
+      },
+      "defense": [
+        "Einen MAC-Filter nie als einzigen Schutz verwenden, denn er ist leicht zu umgehen.",
+        "WLAN mit WPA2 oder WPA3 und einem starken Passwort absichern.",
+        "Am Switch Port Security aktivieren, damit pro Anschluss nur wenige bekannte Adressen erlaubt sind.",
+        "Mit 802.1X Geräte vor dem Netzzugang anmelden lassen.",
+        "Nicht benutzte Switch-Anschlüsse abschalten."
+      ]
+    },
+    {
+      "id": "arp",
+      "title": "ARP (Adressauflösung)",
+      "tags": [
+        "Schicht 2/3",
+        "Man-in-the-Middle",
+        "Lokales Netz"
+      ],
+      "description": "Im lokalen Netz werden Daten über MAC-Adressen zugestellt, die Geräte kennen aber nur die IP-Adresse des Ziels. Das Address Resolution Protocol (ARP) übersetzt die beiden: Ein Gerät fragt alle im Netz „Wer hat die IP-Adresse 192.168.1.1?“, und das passende Gerät antwortet mit seiner MAC-Adresse. Das Ergebnis wird zwischengespeichert.",
+      "attack": {
+        "text": "ARP prüft nicht, wer antwortet. Beim ARP-Spoofing schickt ein Angreifer ungefragt gefälschte Antworten und behauptet, selbst der Router zu sein. Die Geräte schicken ihre Daten dann an den Angreifer, der sie mitliest, verändert und weiterleitet. Das Opfer merkt davon nichts (Man-in-the-Middle).",
+        "example": "Normal:\n  PC:      Wer hat 192.168.1.1?\n  Router:  192.168.1.1 ist bei 00:AA:BB:CC:DD:01\n\nAngriff:\n  Angreifer (ungefragt): 192.168.1.1 ist bei 66:66:66:66:66:66\n  Der PC schickt alle Pakete für den Router jetzt an den Angreifer."
+      },
+      "defense": [
+        "Verbindungen immer verschlüsseln (HTTPS, SSH, VPN), damit abgefangene Daten nutzlos sind.",
+        "Bei Zertifikatswarnungen im Browser nie weiterklicken.",
+        "Am Switch Dynamic ARP Inspection aktivieren, damit gefälschte Antworten verworfen werden.",
+        "Für besonders wichtige Geräte statische ARP-Einträge verwenden.",
+        "Das Netz in kleine Segmente teilen und ARP-Tabellen auf Änderungen überwachen."
+      ]
+    },
+    {
+      "id": "ports",
+      "title": "Ports und Dienste",
+      "tags": [
+        "Schicht 4",
+        "Port-Scan",
+        "Dienste"
+      ],
+      "description": "Die IP-Adresse findet das Gerät, der Port findet den Dienst auf dem Gerät. Es gibt 65.535 Ports. Bekannte Dienste haben feste Standardports: 21 FTP, 22 SSH, 23 Telnet, 25 E-Mail (SMTP), 53 DNS, 80 HTTP, 443 HTTPS, 3306 MySQL, 3389 Remotedesktop. Ein offener Port bedeutet, dass dort ein Programm auf Verbindungen wartet.",
+      "attack": {
+        "text": "Bei einem Port-Scan probiert ein Angreifer automatisch viele Ports eines Geräts durch. Offene Ports zeigen, welche Dienste laufen und oft auch in welcher Version. Danach sucht er gezielt nach bekannten Schwachstellen oder schwachen Passwörtern für genau diese Dienste.",
+        "example": "$ nmap 192.168.1.20\n\nPORT      STATE  SERVICE\n22/tcp    open   ssh\n80/tcp    open   http\n3306/tcp  open   mysql\n\nOffene Datenbank: ein lohnendes Ziel."
+      },
+      "defense": [
+        "Nur Dienste laufen lassen, die wirklich gebraucht werden, und alles andere abschalten.",
+        "Eine Firewall lässt nur die nötigen Ports durch. Datenbanken und Verwaltungsdienste gehören nicht ins Internet.",
+        "Dienste aktuell halten, denn Scans suchen gezielt nach alten Versionen.",
+        "Starke Passwörter und Zwei-Faktor-Anmeldung für erreichbare Dienste.",
+        "Port-Scans in den Protokollen und mit Erkennungssystemen bemerken. Einen anderen Port zu wählen ist allein kein Schutz."
+      ]
+    },
+    {
+      "id": "tcp-udp",
+      "title": "TCP und UDP",
+      "tags": [
+        "Schicht 4",
+        "Handshake",
+        "DDoS"
+      ],
+      "description": "TCP baut vor dem Datenaustausch eine Verbindung auf und stellt sicher, dass alles vollständig und in der richtigen Reihenfolge ankommt. Der Verbindungsaufbau heißt Drei-Wege-Handschlag: SYN, SYN-ACK, ACK. UDP verzichtet auf Verbindung und Bestätigung. Es ist dadurch schneller, aber ohne Garantie, und eignet sich für DNS, Videoanrufe und Spiele.",
+      "attack": {
+        "text": "Bei der SYN-Flood schickt ein Angreifer sehr viele SYN-Pakete mit gefälschten Absendern. Der Server antwortet jedes Mal und wartet auf ein ACK, das nie kommt. Seine Tabelle halb offener Verbindungen füllt sich, und echte Nutzer kommen nicht mehr durch. Weil UDP keine Verbindung aufbaut, lassen sich dort Absender leichter fälschen. Bei Verstärkungsangriffen löst eine kleine Anfrage eine große Antwort aus, die beim Opfer ankommt.",
+        "example": "Normal:\n  Client → Server:  SYN\n  Server → Client:  SYN-ACK\n  Client → Server:  ACK        (Verbindung steht)\n\nSYN-Flood:\n  Angreifer → Server:  SYN, SYN, SYN, SYN … (tausendfach, gefälschte Absender)\n  Server → ?:          SYN-ACK … und wartet vergeblich auf das ACK"
+      },
+      "defense": [
+        "SYN-Cookies aktivieren, damit der Server für unbestätigte Verbindungen keinen Speicher belegt.",
+        "Anfragen pro Absender begrenzen (Rate-Limiting) und kurze Timeouts für halb offene Verbindungen einstellen.",
+        "Für größere Angriffe Schutz beim Provider oder bei einem Content-Delivery-Netzwerk nutzen.",
+        "UDP-Dienste nicht für alle öffnen, zum Beispiel keinen offenen DNS-Server betreiben.",
+        "Absenderadressen am Netzwerkrand prüfen (Anti-Spoofing)."
+      ]
+    },
+    {
+      "id": "dns",
+      "title": "DNS",
+      "tags": [
+        "Schicht 7",
+        "Namensauflösung",
+        "Spoofing"
+      ],
+      "description": "Das Domain Name System (DNS) ist das Telefonbuch des Internets. Es übersetzt Namen wie www.beispiel.at in IP-Adressen. Dein Gerät fragt dafür einen DNS-Server (Resolver), der die Antwort sucht und zwischenspeichert. Wichtige Eintragstypen sind A und AAAA (IP-Adresse), MX (Mailserver), CNAME (Alias) und TXT (freier Text). DNS nutzt meist Port 53.",
+      "attack": {
+        "text": "Beim DNS-Spoofing oder Cache Poisoning bekommt das Opfer eine gefälschte Antwort mit der IP-Adresse des Angreifers. Wer dann die richtige Adresse eintippt, landet trotzdem auf der gefälschten Seite. Außerdem lässt sich DNS missbrauchen, um heimlich Daten aus einem Netz zu schmuggeln (DNS-Tunneling), weil es fast überall erlaubt ist.",
+        "example": "Eingabe im Browser:  www.meine-bank.example\n\nRichtige Antwort:    203.0.113.10   (echte Bank)\nGefälschte Antwort:  198.51.100.66  (Seite des Angreifers)"
+      },
+      "defense": [
+        "Vertrauenswürdige DNS-Server verwenden und diese aktuell halten.",
+        "DNSSEC prüft, ob Antworten echt sind, und DNS über HTTPS oder TLS verschlüsselt die Anfragen.",
+        "Immer auf das Schloss und das Zertifikat im Browser achten: Eine gefälschte Seite hat kein gültiges Zertifikat für den echten Namen.",
+        "DNS-Anfragen im Netz überwachen und auf auffällig lange oder häufige Anfragen achten.",
+        "Eigene Domains mit Zwei-Faktor-Anmeldung beim Anbieter schützen."
+      ]
+    },
+    {
+      "id": "dhcp",
+      "title": "DHCP",
+      "tags": [
+        "Schicht 7",
+        "Automatisch",
+        "Man-in-the-Middle"
+      ],
+      "description": "Das Dynamic Host Configuration Protocol (DHCP) vergibt Geräten automatisch ihre Netzwerkeinstellungen: IP-Adresse, Subnetzmaske, Gateway und DNS-Server. Der Ablauf heißt DORA: Discover (Suche), Offer (Angebot), Request (Anfrage), Acknowledge (Bestätigung). Das Gerät fragt per Broadcast, und der erste Server, der antwortet, gewinnt.",
+      "attack": {
+        "text": "Das Gerät prüft nicht, ob der DHCP-Server echt ist. Ein Angreifer im Netz startet einen eigenen Server (Rogue DHCP) und trägt sich selbst als Gateway und DNS-Server ein. Damit läuft der gesamte Datenverkehr über ihn. Bei der DHCP-Starvation fordert der Angreifer so viele Adressen an, bis keine mehr frei sind, und echte Geräte bekommen keine mehr.",
+        "example": "Gerät:        Wer vergibt mir eine Adresse? (an alle)\n\nEchter Server:   IP 192.168.1.50, Gateway 192.168.1.1,  DNS 192.168.1.1\nFalscher Server: IP 192.168.1.51, Gateway 192.168.1.66, DNS 192.168.1.66\n                 (schneller geantwortet, also nimmt das Gerät dieses Angebot)"
+      },
+      "defense": [
+        "Am Switch DHCP-Snooping aktivieren, damit nur der echte Server antworten darf.",
+        "Port Security begrenzt, wie viele Geräte pro Anschluss Adressen anfordern dürfen.",
+        "Fremde Geräte per 802.1X gar nicht erst ins Netz lassen.",
+        "Neue oder unbekannte DHCP-Server im Netz überwachen.",
+        "Auch bei korrekten Einstellungen Verbindungen verschlüsseln (HTTPS, VPN)."
+      ]
+    },
+    {
+      "id": "http-https",
+      "title": "HTTP und HTTPS",
+      "tags": [
+        "Schicht 7",
+        "Verschlüsselung",
+        "Web"
+      ],
+      "description": "HTTP ist das Protokoll des Webs: Der Browser schickt eine Anfrage (Request, zum Beispiel GET oder POST), der Server antwortet mit einem Statuscode (200 OK, 404 nicht gefunden, 500 Serverfehler) und den Inhalten. HTTP läuft unverschlüsselt über Port 80. HTTPS ist HTTP über TLS (Port 443): Die Verbindung wird verschlüsselt, und ein Zertifikat belegt, dass die Seite wirklich zur Adresse gehört.",
+      "attack": {
+        "text": "Bei HTTP kann jeder, der im Weg der Daten sitzt, alles mitlesen: Passwörter, Formulare, Cookies. Besonders einfach geht das in offenen WLANs. Beim SSL-Stripping leitet ein Angreifer im Netz den Verkehr um und schwächt eine HTTPS-Verbindung zu HTTP ab, ohne dass das Opfer es sofort merkt.",
+        "example": "POST /login HTTP/1.1\nHost: shop.example\n\nbenutzer=anna&passwort=geheim123\n\nBei HTTP für jeden im Netz lesbar, bei HTTPS verschlüsselt."
+      },
+      "defense": [
+        "Nur Seiten mit HTTPS benutzen und bei Zertifikatswarnungen nie weiterklicken.",
+        "Als Betreiber überall HTTPS einsetzen und mit HSTS festlegen, dass Browser nie auf HTTP ausweichen.",
+        "Cookies mit den Flags „Secure“ und „HttpOnly“ setzen.",
+        "In fremden und öffentlichen WLANs ein VPN nutzen.",
+        "Zertifikate rechtzeitig erneuern und Software aktuell halten."
+      ]
+    },
+    {
+      "id": "firewall-nat",
+      "title": "Firewall und NAT",
+      "tags": [
+        "Schutz",
+        "Regeln",
+        "Router"
+      ],
+      "description": "Eine Firewall entscheidet anhand von Regeln, welcher Datenverkehr durchgelassen wird, etwa nach Absender, Ziel, Port und Protokoll. Gute Regelwerke verbieten zuerst alles und erlauben nur das Nötige. NAT (Network Address Translation) lässt viele Geräte mit privaten Adressen über eine einzige öffentliche Adresse ins Internet. Der Router merkt sich, welche Antwort zu welchem Gerät gehört. Dadurch sind die Geräte von außen nicht direkt erreichbar, NAT ist aber keine echte Firewall.",
+      "attack": {
+        "text": "Meist werden nicht die Geräte selbst geknackt, sondern ihre Regeln: eine zu offene Freigabe, vergessene Portweiterleitungen oder Router mit Standardpasswort. Auch UPnP kann Programme ungefragt Ports im Router öffnen lassen. Angreifer scannen das Netz nach genau solchen Lücken.",
+        "example": "Sinnvolle Regeln:\n  1  ERLAUBEN   Internet → Webserver     Port 443\n  2  ERLAUBEN   Intern   → Internet      alle\n  3  VERBIETEN  alles andere\n\nTypischer Fehler:\n  ERLAUBEN   Internet → Datenbank    Port 3306   (nur „kurz zum Testen“)"
+      },
+      "defense": [
+        "Default-Deny: Zuerst alles verbieten und nur nötigen Verkehr erlauben.",
+        "Regeln regelmäßig prüfen und alte oder zu offene Freigaben entfernen.",
+        "Portweiterleitungen auf das Nötigste beschränken und UPnP deaktivieren, wenn es nicht gebraucht wird.",
+        "Das Standardpasswort von Router und Firewall sofort ändern und die Verwaltungsoberfläche nicht aus dem Internet erreichbar machen.",
+        "Firmware regelmäßig aktualisieren."
+      ]
     }
   ]
 }
