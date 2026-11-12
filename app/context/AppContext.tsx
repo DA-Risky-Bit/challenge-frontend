@@ -80,7 +80,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const [points, setPoints] = useState<number | null>(null);
 
     // furthest stage reached: 1, 2 or 3; earlier stages can be reviewed, later ones stay locked
-    const [stage, setStage] = useState<Stage>(3);
+    const [stage, setStage] = useState<Stage>(1);
     // submitted inputs of finished stages: { 1: { username: "…" } }
     const [answers, setAnswers] = useState<Answers>({});
 
