@@ -2,16 +2,17 @@
   "stages": [
     {
       "stage": 1,
-      "title": "Recherche",
+      "title": "Sicherheitsfragen",
       "terminal": false,
       "story": [
-        [{ "text": "", "href": "chatty.org" }]
+        [{ "text": "Chatty", "href": "http://chat.localhost" }]
       ],
       "goal": "",
       "submit": {
         "fields": [
-          { "name": "username", "label": "Benutzername", "type": "text" },
-          { "name": "password", "label": "Passwort", "type": "password" }
+          { "name": "frage_1", "label": "Was ist dein Lieblingsessen?", "type": "text" },
+          { "name": "frage_2", "label": "Wie heißt dein Haustier?", "type": "text" },
+          { "name": "frage_3", "label": "Wo wurdest du geboren?", "type": "text" }
         ]
       }
     },
