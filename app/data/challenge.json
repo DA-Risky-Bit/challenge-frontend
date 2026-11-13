@@ -5,10 +5,25 @@
       "title": "Sicherheitsfragen",
       "terminal": false,
       "story": [
-        [
-          {
-                "text": "Hintergrundgeschichte\\nAls der Nusstari-Konzern 1974 gegründet wurde, konnte noch niemand ahnen, wie groß sein Einfluss eines Tages sein würde. Das Unternehmen wuchs rasant, expandierte in immer neue Märkte und breitete sich schließlich weltweit aus. Innerhalb weniger Jahrzehnte war Nusstari in nahezu allen Wirtschaftssektoren vertreten. Von der Lebensmittelproduktion über Technologie und Konsumgüter bis hin zur Waffenindustrie und Spionage. Kaum ein Bereich blieb von seinem Einfluss verschont.\\nDoch irgendwann wurde der Konzern Opfer seiner eigenen Größe. Interne Konflikte, Machtkämpfe und wirtschaftliche Probleme führten schließlich zu seinem Zusammenbruch. Das einst mächtige Unternehmen wurde in zahlreiche kleinere Konzerne und Tochtergesellschaften unter dem Nusstari Logo aufgespalten.\\nWährend dieser Aufspaltung gelangten vertrauliche Unternehmensinformationen über den [redacted            ]-Vorfall an die Öffentlichkeit. Die Enthüllungen hätten weitreichende Konsequenzen haben können. Doch durch gezielte Vertuschung, politischen Einfluss und fehlende Beweise verliefen sämtliche Ermittlungen und Gerichtsverfahren im Sande.\\nEs liegt in unserer gemeinsamen Verantwortung, die Welt zu einem besseren Ort zu machen. Unsere Quellen berichten von internen Dokumenten, die den damaligen Vorfall detailliert belegen sollen. Deine Aufgabe ist es, diese Berichte zu finden und die Wahrheit ans Licht zu bringen.\\nOhne Zugang zu den internen Mitarbeiterkonten werden wir jedoch nicht weit kommen.\\nDein Ziel\\nEmil Winter ist unser Ziel. Ausgewertete Daten deuten darauf hin, dass er eine hohe Position innerhalb des Unternehmens innehat und diese durch Vetternwirtschaft erlangt hat. Es ist anzunehmen das er über wenige Sicherheitskenntnisse verfügt.\\nUm Zugriff auf das Konto zu erhalten, müssen folgende drei Sicherheitsfragen beantwortet werden:\\n1.\\tWo wurdest du geboren?\\n2.\\tWie hieß dein Haustier, als du ein Kind warst?\\n3.\\tWas ist dein Lieblingsessen?\\n\\nAchtung: Das Firmen-Login erlaubt maximal drei fehlgeschlagene Versuche. Beim dritten Fehlversuch wird automatisch ein Sicherheits-Lockdown ausgelöst.\\n\\nViel Glück!", "href": "http://chat.localhost" }]
-          ],
+        "Hintergrundgeschichte",
+        "Als der Nusstari-Konzern 1974 gegründet wurde, konnte noch niemand ahnen, wie groß sein Einfluss eines Tages sein würde. Das Unternehmen wuchs rasant, expandierte in immer neue Märkte und breitete sich schließlich weltweit aus. Innerhalb weniger Jahrzehnte war Nusstari in nahezu allen Wirtschaftssektoren vertreten. Von der Lebensmittelproduktion über Technologie und Konsumgüter bis hin zur Waffenindustrie und Spionage. Kaum ein Bereich blieb von seinem Einfluss verschont.",
+        "Doch irgendwann wurde der Konzern Opfer seiner eigenen Größe. Interne Konflikte, Machtkämpfe und wirtschaftliche Probleme führten schließlich zu seinem Zusammenbruch. Das einst mächtige Unternehmen wurde in zahlreiche kleinere Konzerne und Tochtergesellschaften unter dem Nusstari Logo aufgespalten.",
+        "Während dieser Aufspaltung gelangten vertrauliche Unternehmensinformationen über den [redacted]-Vorfall an die Öffentlichkeit. Die Enthüllungen hätten weitreichende Konsequenzen haben können. Doch durch gezielte Vertuschung, politischen Einfluss und fehlende Beweise verliefen sämtliche Ermittlungen und Gerichtsverfahren im Sande.",
+        "Es liegt in unserer gemeinsamen Verantwortung, die Welt zu einem besseren Ort zu machen. Unsere Quellen berichten von internen Dokumenten, die den damaligen Vorfall detailliert belegen sollen. Deine Aufgabe ist es, diese Berichte zu finden und die Wahrheit ans Licht zu bringen.",
+        "Ohne Zugang zu den internen Mitarbeiterkonten werden wir jedoch nicht weit kommen.",
+        "Dein Ziel",
+        "Emil Winter ist unser Ziel. Ausgewertete Daten deuten darauf hin, dass er eine hohe Position innerhalb des Unternehmens innehat und diese durch Vetternwirtschaft erlangt hat. Es ist anzunehmen, dass er über wenige Sicherheitskenntnisse verfügt.",
+        "Um Zugriff auf das Konto zu erhalten, müssen folgende drei Sicherheitsfragen beantwortet werden:",
+        "1.\tWo wurdest du geboren?",
+        "2.\tWie hieß dein Haustier, als du ein Kind warst?",
+        "3.\tWas ist dein Lieblingsessen?",
+        "",
+        "Achtung: Das Firmen-Login erlaubt maximal drei fehlgeschlagene Versuche. Beim dritten Fehlversuch wird automatisch ein Sicherheits-Lockdown ausgelöst.",
+        "",
+        "Viel Glück!",
+        "",
+        [{ "text": "Chatplattform", "href": "http://chat.localhost" }]
+      ],
           "goal": "",
           "submit": {
             "fields": [
