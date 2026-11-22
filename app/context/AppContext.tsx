@@ -10,6 +10,7 @@ import {
 import challengeData from "~/data/challenge.json";
 import resourcesData from "~/data/resources.json";
 import { hasAcknowledged } from "~/utils/cookies";
+import { api, resetCsrf } from "~/api/clients";
 import type {
     Answers,
     Challenge,
@@ -18,10 +19,16 @@ import type {
     Stage,
 } from "~/types";
 
+export type AuthPayload = {
+    lobbyId: string;
+    username: string;
+    points?: number | null;
+};
+
 type AppState = {
     isLoggedIn: boolean;
     authChecked: boolean;
-    login: () => boolean;
+    login: (payload: AuthPayload) => boolean;
     logout: () => void;
 
     lobbyId: string;
@@ -47,60 +54,91 @@ type AppState = {
 
 const AppContext = createContext<AppState | null>(null);
 
-const AUTH_KEY = "riskybit-auth";
-
-function readAuth() {
-    try {
-        return sessionStorage.getItem(AUTH_KEY) === "1";
-    } catch {
-        return false;
-    }
-}
-
-function writeAuth(on: boolean) {
-    try {
-        if (on) sessionStorage.setItem(AUTH_KEY, "1");
-        else sessionStorage.removeItem(AUTH_KEY);
-    } catch {
-        /* storage not available */
-    }
-}
-
 export function AppProvider({ children }: { children: ReactNode }) {
-    // storage is read after mount so server and client render the same first pass
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [authChecked, setAuthChecked] = useState(false);
-    useEffect(() => {
-        setLoggedIn(readAuth() && hasAcknowledged());
-        setAuthChecked(true);
-    }, []);
 
     const [lobbyId, setLobbyId] = useState("");
     const [username, setUsername] = useState("");
     const [points, setPoints] = useState<number | null>(null);
 
-    // furthest stage reached: 1, 2 or 3; earlier stages can be reviewed, later ones stay locked
+    // furthest stage reached: 1, 2 or 3
     const [stage, setStage] = useState<Stage>(1);
-    // submitted inputs of finished stages: { 1: { username: "…" } }
     const [answers, setAnswers] = useState<Answers>({});
 
     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
-    // JSON blueprints: app/data/challenge.json and app/data/resources.json
     const [challenge, setChallenge] = useState<Challenge>(challengeData);
     const [resources, setResources] = useState<Resources>(resourcesData);
 
-    // signing in needs the cookie notice to be acknowledged
-    const login = () => {
+    const login = (payload: AuthPayload) => {
         if (!hasAcknowledged()) return false;
-        writeAuth(true);
         setLoggedIn(true);
+        setLobbyId(payload.lobbyId);
+        setUsername(payload.username);
+        setPoints(payload.points ?? null);
         return true;
     };
+
     const logout = () => {
-        writeAuth(false);
-        setLoggedIn(false);
+        api("/api/auth/logout", { method: "POST" }).catch(() => {});
+        clearSession();
     };
+
+    const clearSession = () => {
+        setLoggedIn(false);
+        setLobbyId("");
+        setUsername("");
+        setPoints(null);
+        setStage(1);
+        setAnswers({});
+        setLeaderboard([]);
+        resetCsrf();
+    };
+
+    // On mount: if the session flag is set, ask the server who we are.
+    // If the cookie is gone the API client fires 'session-expired' → logout().
+    useEffect(() => {
+        let cancelled = false;
+
+        const check = async () => {
+            if (!hasAcknowledged()) return;
+
+            const res = await api("/api/auth/me");
+            if (cancelled) return;
+
+            if (res.ok) {
+                const data = await res.json();
+                const u = data.user ?? data;
+                login({
+                    lobbyId: u.lobbyId ?? "",
+                    username: u.username ?? u.email?.split("@")[0] ?? "",
+                    points: u.points ?? null,
+                });
+            } else {
+                clearSession();
+            }
+        };
+
+        check()
+            .catch(() => {
+                if (!cancelled) clearSession();
+            })
+            .finally(() => {
+                if (!cancelled) setAuthChecked(true);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    // Hard logout when the API tells us the session died (401s in api client)
+    useEffect(() => {
+        const onSessionExpired = () => clearSession();
+        window.addEventListener("session-expired", onSessionExpired);
+        return () => window.removeEventListener("session-expired", onSessionExpired);
+    }, []);
 
     const value: AppState = {
         isLoggedIn,
