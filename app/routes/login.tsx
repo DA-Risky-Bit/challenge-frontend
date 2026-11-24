@@ -139,7 +139,7 @@ export default function Login() {
                 <form className="form" id="pReg" role="tabpanel" aria-labelledby="tabReg" onSubmit={submit}>
                   <div className="field">
                     <label htmlFor="code">Lobbycode</label>
-                    <input className="code" id="code" name="code" type="text" pattern="[A-Za-z]{2}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}" title="Format: RL-XXXX-XXXX" autoComplete="off" spellCheck={false} required />
+                    <input className="code" id="code" name="code" type="text" title="ABCDEF123" autoComplete="off" spellCheck={false} required />
                   </div>
                   <div className="field">
                     <label htmlFor="regUser">Benutzername</label>
